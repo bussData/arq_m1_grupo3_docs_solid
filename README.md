@@ -22,12 +22,13 @@ arch-repo-java/
 │
 ├── docs/
 │   └── arquitectura-general.md     ← Visión general del sistema
+│   └── DiagramaContexto.png        ← Visión general del sistema
 │
 └── adr/
     ├── README.md                    ← Índice y plantilla de ADR
     ├── ADR-001-srp-servicio-notificaciones.md --cambiar
     ├── ADR-002-ocp-calculo-notas.md
-    └── ADR-003-dip-repositorio-prestamos.md --cambiar
+    └── ADR-003-isp-control-pagos.md
 ```
 
 ---
@@ -39,11 +40,8 @@ FALTA EDITAR
 |----|--------|-----------------|--------|
 | [ADR-001](./adr/ADR-001-srp-servicio-notificaciones.md) | Separar el envío de notificaciones del servicio de préstamos | SRP | ✅ Aceptado | --cambiar
 | [ADR-002](../adr/ADR-002-ocp-modulo-notas.md) |  Introducir evaluaciones extensibles para el cálculo de notas | OCP | ✅ Aceptado |
-| [ADR-003](./adr/ADR-003-dip-repositorio-prestamos.md) | Abstraer la persistencia de préstamos mediante interfaz | DIP | ✅ Aceptado |--cambiar
-| [ADR-004](./adr/ADR-004-lsp-tipos-de-libro.md) | Garantizar que todos los tipos de libro son intercambiables | LSP | ✅ Aceptado |--cambiar
-| [ADR-005](./adr/ADR-005-isp-gestion-usuarios.md) | Segregar la interfaz de gestión de usuarios según su rol | ISP | ✅ Aceptado |--cambiar
+| [ADR-003](../adr/ADR-003-isp-control-pagos.md) | Segregar interfaz de pagos según su rol | ISP | ✅ Aceptado |
 
----
 
 ## Tecnologías del sistema
 
