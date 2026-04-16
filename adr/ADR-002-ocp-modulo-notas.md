@@ -15,7 +15,7 @@ Cuando un alumno culmina un semestre, el sistema realiza el calculo de las notas
 ```java
 // NotaService.java — lógica de notas acoplada con condicionales
 @Service
-public class NotasService {
+public class NotaService {
 
     public double calcularNota(Curso curso) {
         
@@ -140,31 +140,31 @@ public class NotaFactory {
 
 ```java
 // En el controlador o caso de uso
-CalculoEvaluacion calculoEval = NotaFactory.obtener(curso.getCalificacion(), curso.getTipoEvaluacion());
-double notaFinal = notaService.calcularMulta(prestamo, estrategia);
+CalculoEvaluacion calculoEval = NotaFactory.obtener(calificacion, tipoEvaluacion);
+double notaFinal = notaService.calcularNota(calificacion, tipoEvaluacion);
 ```
 
 ### Principio SOLID aplicado — OCP
 
 > "Las entidades de software deben estar abiertas para extensión y cerradas para modificación."
 
-**Antes:** añadir `INVESTIGADOR` → modificar `PrestamoService` (riesgo de regresión).  
-**Después:** añadir `INVESTIGADOR` → crear `MultaInvestigador` (cero riesgo sobre código existente).
+**Antes:** añadir `INVESTIGACION` → modificar `NotaService` (riesgo de regresión).  
+**Después:** añadir `INVESTIGACION` → crear `EvaluacionInvestigacion` (cero riesgo sobre código existente).
 
 ```
-Agregar nuevo tipo de usuario:
-  ANTES → modificar PrestamoService    ← toca código que ya funciona
+Agregar nuevo tipo de evaluacion:
+  ANTES → modificar NotaService    ← toca código que ya funciona
   AHORA → crear nueva clase            ← no toca nada existente
 ```
 
-**¿Qué está "cerrado"?** La interfaz `EstrategiaMulta` y el método `calcularMulta` de `PrestamoService`.  
-**¿Qué está "abierto"?** El conjunto de implementaciones concretas de `EstrategiaMulta`.
+**¿Qué está "cerrado"?** La interfaz `CalculoEvaluacion` y el método `calcularNota` de `NotaService`.  
+**¿Qué está "abierto"?** El conjunto de implementaciones concretas de `CalculoEvaluacion`.
 
 ### Alternativas consideradas
 
 | Alternativa | Por qué se descartó |
 |-------------|---------------------|
-| Guardar tarifas en base de datos | Cubre multas de tarifa fija, pero no puede expresar reglas más complejas (ej. tarifa progresiva, exenciones por historial) |
+| Guardar calificaciones en base de datos | considerando el porcentaje de valor, pero no puede expresar reglas más complejas (ej. evaluaciones acumuladas, cambios en el calculo de evaluaciones) |
 | Usar herencia en lugar de composición | La herencia genera jerarquías frágiles. La composición mediante la interfaz es más flexible y testeable |
 
 ---
@@ -172,10 +172,10 @@ Agregar nuevo tipo de usuario:
 ## Consecuencias
 
 ### Positivas
-- Cada estrategia tiene su propia prueba unitaria independiente.
-- Añadir una nueva tarifa no requiere tocar ni revisar las clases existentes.
-- `PrestamoService` permanece estable ante cambios en la política de multas.
+- Cada evaluación tendría su propia prueba unitaria independiente.
+- Añadir una nueva evaluación no requiere tocar ni revisar las clases existentes.
+- `NotaService` permanece estable ante cambios en la consideracion de valor porcentual de notas.
 
 ### Negativas / trade-offs
-- `MultaFactory` sigue siendo un punto de modificación cuando se añade un tipo nuevo. Aceptable: el cambio es de una sola línea en el `switch`.
+- `NotaFactory` sigue siendo un punto de modificación cuando se añade un tipo nuevo. Aceptable: el cambio es de una sola línea en el `switch`.
 - Se crean varias clases pequeñas. En sistemas con muchos tipos de usuario puede parecer excesivo; valorar si una tabla de configuración en base de datos sería suficiente.
