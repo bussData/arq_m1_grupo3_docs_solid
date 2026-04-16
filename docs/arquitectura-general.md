@@ -11,7 +11,7 @@ Sistema para gestionar la matrícula de almunos de un colegio: alumnos, notas, c
 ## Diagrama de Contexto
 
 ```
-FALTA IMAGEN
+Ver imagen "DiagramaContexto.png"
 ```
 
 ---
