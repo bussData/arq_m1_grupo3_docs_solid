@@ -17,25 +17,22 @@ Cuando un alumno culmina un semestre, el sistema realiza el calculo de las notas
 @Service
 public class NotasService {
 
-    public double calcularNota(List<Curso> lstCursos, String tipoEvaluacion) {
+    public double calcularNota(Curso curso) {
         
-        double notaFinal = 0.0;
-        for(int i=0; i<lstCursos; i++){
-           
-            double notaCalculada = 0.0;
-            double calificacion = curso.get(i).get("calificación");
-            //Cada tipo de evaluacion exige modificar este método
-            if (tipoEvaluacion.equals("PRACTICA")) {
-                notaCalculada = calificacion * 0.30;   
-            } else if (tipoEvaluacion.equals("TRABAJO-GRUPAL")) {
-                notaCalculada = calificacion * 0.30;    
-            } else if (tipoEvaluacion.equals("EXPOSICION")){
-                notaCalculada =  calificacion * 0.40;    
-            }  
-            notaFinal = notaFinal + notaCalculada;
-        }
+        double notaFinal = 0.0; 
+        double calificacion = curso.getCalificacion();
+        String tipoEvaluacion = curso.getTipoEvaluacion();
 
-        return notaFinal;
+        //Cada tipo de evaluacion exige modificar este método
+        if (tipoEvaluacion.equals("PRACTICA")) {
+            notaFinal = calificacion * 0.30;   
+        } else if (tipoEvaluacion.equals("TRABAJO-GRUPAL")) {
+            notaFinal = calificacion * 0.30;    
+        } else if (tipoEvaluacion.equals("EXPOSICION")){
+            notaFinal =  calificacion * 0.40;    
+        }              
+
+        return notaFinal ;
     }
 }
 ```
@@ -99,7 +96,7 @@ public class EvaluacionExposicion implements CalculoEvaluacion {
 
 
 
-// Nueva estrategia añadida sin tocar ninguna clase existente
+// Nueva evaluacion añadida sin tocar ninguna clase existente
 // EvaluacionInvestigacion.java
 public class EvaluacionInvestigacion implements CalculoEvaluacion {
     private static final double PORCENTAJE_VALOR = 0.60;  
@@ -115,30 +112,70 @@ public class EvaluacionInvestigacion implements CalculoEvaluacion {
 @Service
 public class NotaService {
 
-    public double calcularNota(Prestamo prestamo, EstrategiaMulta estrategia) {
-        long diasRetraso = ChronoUnit.DAYS.between(
-            prestamo.getFechaVencimiento(), LocalDate.now()
-        );
-        if (diasRetraso <= 0) return 0;
-
-        // ✅ No sabe qué estrategia es; solo la usa
-        return estrategia.calcular(diasRetraso);
+    public double calcularNota(Curso curso, CalculoEvaluacion calculoEval) {
+        
+        //  No sabe qué tipo de evaluacion es; solo la usa
+        return calculoEval.calcular(curso.getCalificacion(), curso.getTipoEvaluacion());
     }
 }
 
 
-// MultaFactory.java — selecciona la estrategia según el tipo de usuario
+// NotaFactory.java — selecciona la evaluacion según el tipo de evaluacion
 @Component
-public class MultaFactory {
+public class NotaFactory {
 
-    public EstrategiaMulta obtener(String tipoUsuario) {
-        return switch (tipoUsuario) {
-            case "ESTUDIANTE"    -> new MultaEstudiante();
-            case "DOCENTE"       -> new MultaDocente();
-            case "EXTERNO"       -> new MultaExterno();
-            case "INVESTIGADOR"  -> new MultaInvestigador();
-            default              -> new MultaEstudiante();
+    public CalculoEvaluacion obtener(double calificacion, String tipoEvaluacion) {
+        return switch (tipoEvaluacion) {
+            case "PRACTICA"    -> new EvaluacionPractica();
+            case "TRABAJO-GRUPAL"       -> new EvaluacionTrabajoGrupal();
+            case "EXPOSICION"       -> new EvaluacionExposicion();
+            case "INVESTIGACION"  -> new EvaluacionInvestigacion();
+            default              -> new EvaluacionPractica();
         };
     }
 }
 ```
+
+**¿Cómo se usa en conjunto?**
+
+```java
+// En el controlador o caso de uso
+CalculoEvaluacion calculoEval = NotaFactory.obtener(curso.getCalificacion(), curso.getTipoEvaluacion());
+double notaFinal = notaService.calcularMulta(prestamo, estrategia);
+```
+
+### Principio SOLID aplicado — OCP
+
+> "Las entidades de software deben estar abiertas para extensión y cerradas para modificación."
+
+**Antes:** añadir `INVESTIGADOR` → modificar `PrestamoService` (riesgo de regresión).  
+**Después:** añadir `INVESTIGADOR` → crear `MultaInvestigador` (cero riesgo sobre código existente).
+
+```
+Agregar nuevo tipo de usuario:
+  ANTES → modificar PrestamoService    ← toca código que ya funciona
+  AHORA → crear nueva clase            ← no toca nada existente
+```
+
+**¿Qué está "cerrado"?** La interfaz `EstrategiaMulta` y el método `calcularMulta` de `PrestamoService`.  
+**¿Qué está "abierto"?** El conjunto de implementaciones concretas de `EstrategiaMulta`.
+
+### Alternativas consideradas
+
+| Alternativa | Por qué se descartó |
+|-------------|---------------------|
+| Guardar tarifas en base de datos | Cubre multas de tarifa fija, pero no puede expresar reglas más complejas (ej. tarifa progresiva, exenciones por historial) |
+| Usar herencia en lugar de composición | La herencia genera jerarquías frágiles. La composición mediante la interfaz es más flexible y testeable |
+
+---
+
+## Consecuencias
+
+### Positivas
+- Cada estrategia tiene su propia prueba unitaria independiente.
+- Añadir una nueva tarifa no requiere tocar ni revisar las clases existentes.
+- `PrestamoService` permanece estable ante cambios en la política de multas.
+
+### Negativas / trade-offs
+- `MultaFactory` sigue siendo un punto de modificación cuando se añade un tipo nuevo. Aceptable: el cambio es de una sola línea en el `switch`.
+- Se crean varias clases pequeñas. En sistemas con muchos tipos de usuario puede parecer excesivo; valorar si una tabla de configuración en base de datos sería suficiente.

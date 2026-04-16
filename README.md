@@ -7,7 +7,7 @@
 
 ## Contexto del sistema
 
-El **Sistema de Matrícula de Alumnos** tiene microservicios que permiten gestionar la matrícula de alumnos: registrar alumnos, notas y control de pagos.
+El **Sistema de Matrícula de Alumnos** es una API REST en Java, Javascript y C++ gestionar la matrícula de alumnos: registrar alumnos, notas y control de pagos.
 
 Este repositorio documenta las decisiones de arquitectura del sistema usando **Architecture Decision Records (ADR)**.
 
@@ -49,7 +49,7 @@ FALTA EDITAR
 
 | Capa | Tecnología |
 |------|------------|
-| API | Java 21 + Spring Boot 3 |
+| API | Java 21 + Spring Boot 3 | Javascript | C++
 | Base de datos | MySQL 8 |
 | ORM | Spring Data JPA / Hibernate |
 | Pruebas | JUnit 5 + Mockito |
