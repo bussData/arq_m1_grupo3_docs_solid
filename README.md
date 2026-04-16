@@ -39,8 +39,8 @@ FALTA EDITAR
 | ID | Título | Principio SOLID | Estado |
 |----|--------|-----------------|--------|
 | [ADR-001](./adr/ADR-001-srp-servicio-notificaciones.md) | Separar el envío de notificaciones del servicio de préstamos | SRP | ✅ Aceptado | --cambiar
-| [ADR-002](../adr/ADR-002-ocp-modulo-notas.md) |  Introducir evaluaciones extensibles para el cálculo de notas | OCP | ✅ Aceptado |
-| [ADR-003](../adr/ADR-003-isp-control-pagos.md) | Segregar interfaz de pagos según su rol | ISP | ✅ Aceptado |
+| [ADR-002](./adr/ADR-002-ocp-modulo-notas.md) |  Introducir evaluaciones extensibles para el cálculo de notas | OCP | ✅ Aceptado |
+| [ADR-003](./adr/ADR-003-isp-control-pagos.md) | Segregar interfaz de pagos según su rol | ISP | ✅ Aceptado |
 
 
 ## Tecnologías del sistema
