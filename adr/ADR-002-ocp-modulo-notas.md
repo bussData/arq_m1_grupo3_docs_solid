@@ -1,4 +1,4 @@
-# ADR-002 — Introducir estrategias extensibles para el cálculo de notas
+# ADR-002 — Introducir evaluaciones extensibles para el cálculo de notas
 
 **Fecha:** 2026-04-15
 **Estado:** ✅ Aceptado
