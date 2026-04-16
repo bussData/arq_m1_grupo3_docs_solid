@@ -38,7 +38,7 @@ FALTA EDITAR
 | ID | Título | Principio SOLID | Estado |
 |----|--------|-----------------|--------|
 | [ADR-001](./adr/ADR-001-srp-servicio-notificaciones.md) | Separar el envío de notificaciones del servicio de préstamos | SRP | ✅ Aceptado |
-| [ADR-002](./adr/ADR-002-ocp-calculo-multas.md) | Introducir estrategias extensibles para el cálculo de multas | OCP | ✅ Aceptado |
+| [ADR-002](../adr/ADR-002-ocp-modulo-notas.md) |  Introducir evaluaciones extensibles para el cálculo de notas | OCP | ✅ Aceptado |
 | [ADR-003](./adr/ADR-003-dip-repositorio-prestamos.md) | Abstraer la persistencia de préstamos mediante interfaz | DIP | ✅ Aceptado |
 | [ADR-004](./adr/ADR-004-lsp-tipos-de-libro.md) | Garantizar que todos los tipos de libro son intercambiables | LSP | ✅ Aceptado |
 | [ADR-005](./adr/ADR-005-isp-gestion-usuarios.md) | Segregar la interfaz de gestión de usuarios según su rol | ISP | ✅ Aceptado |
