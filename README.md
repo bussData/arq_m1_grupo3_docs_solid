@@ -14,33 +14,36 @@ Este repositorio documenta las decisiones de arquitectura del sistema usando **A
 ---
 
 ## Estructura del repositorio
-FALTA EDITAR
+
 ```
-arch-repo-java/
+arq_m1_grupo3_docs_solid/
 │
-├── README.md                        ← Este archivo
+├── README.md                              ← Este archivo
 │
 ├── docs/
-│   └── arquitectura-general.md     ← Visión general del sistema
-│   └── DiagramaContexto.png        ← Visión general del sistema
+│   ├── arquitectura-general.md           ← Visión general del sistema
+│   ├── arquitectura-matricula.md         ← Detalle del módulo de matrícula
+│   └── DiagramaContexto.png              ← Diagrama de contexto del sistema
 │
 └── adr/
-    ├── README.md                    ← Índice y plantilla de ADR
-    ├── ADR-001-srp-servicio-notificaciones.md --cambiar
-    ├── ADR-002-ocp-calculo-notas.md
-    └── ADR-003-isp-control-pagos.md
+    ├── ADR-001-srp-matricula.md          ← SRP: Separación de responsabilidades en Matrícula
+    ├── ADR-002-ocp-modulo-notas.md       ← OCP: Evaluaciones extensibles para cálculo de notas
+    ├── ADR-003-isp-control-pagos.md      ← ISP: Segregación de interfaz de pagos
+    ├── ADR-003-lsp-tipos-matricula.md    ← LSP: Jerarquía de tipos de matrícula sustituibles
+    └── ADR-005-dip-repositorio-matricula.md ← DIP: Inversión de dependencias en repositorio
 ```
 
 ---
 
 ## Decisiones registradas
 
-FALTA EDITAR
 | ID | Título | Principio SOLID | Estado |
 |----|--------|-----------------|--------|
-| [ADR-001](./adr/ADR-001-srp-servicio-notificaciones.md) | Separar el envío de notificaciones del servicio de préstamos | SRP | ✅ Aceptado | --cambiar
-| [ADR-002](./adr/ADR-002-ocp-modulo-notas.md) |  Introducir evaluaciones extensibles para el cálculo de notas | OCP | ✅ Aceptado |
-| [ADR-003](./adr/ADR-003-isp-control-pagos.md) | Segregar interfaz de pagos según su rol | ISP | ✅ Aceptado |
+| [ADR-001](./adr/ADR-001-srp-matricula.md) | Separar el registro de datos y notificaciones del servicio de Matrícula | SRP | ✅ Aceptado |
+| [ADR-002](./adr/ADR-002-ocp-modulo-notas.md) | Introducir evaluaciones extensibles para el cálculo de notas | OCP | ✅ Aceptado |
+| [ADR-003](./adr/ADR-003-isp-control-pagos.md) | Segregar la interfaz del módulo de control de pagos del colegio | ISP | ✅ Aceptado |
+| [ADR-004](./adr/ADR-003-lsp-tipos-matricula.md) | Jerarquía de tipos de matrícula sustituibles | LSP | ✅ Aceptado |
+| [ADR-005](./adr/ADR-005-dip-repositorio-matricula.md) | Inversión de dependencias en el repositorio de estudiantes | DIP | ✅ Aceptado |
 
 
 ## Tecnologías del sistema
