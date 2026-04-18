@@ -178,4 +178,4 @@ Agregar nuevo tipo de evaluacion:
 
 ### Negativas / trade-offs
 - `NotaFactory` sigue siendo un punto de modificación cuando se añade un tipo nuevo. Aceptable: el cambio es de una sola línea en el `switch`.
-- Se crean varias clases pequeñas. En sistemas con muchos tipos de usuario puede parecer excesivo; valorar si una tabla de configuración en base de datos sería suficiente.
+- Se crean varias clases pequeñas. En sistemas con muchos tipos de evaluaciones de notas puede parecer excesivo; valorar si una tabla de configuración en base de datos sería suficiente.
