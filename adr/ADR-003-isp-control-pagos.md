@@ -222,7 +222,7 @@ testRegistrarMensualidad();
 
 ### Principio SOLID aplicado — ISP
 
-> "Los clientes no deben verse forzados a depender de interfaces que no usan." — Robert C. Martin
+> "Los clientes no deben verse forzados a depender de interfaces que no usan." 
 
 ```
 ANTES:   TesoreroController -> PagoService (8 métodos)              usa: 2  ignora: 6  [VIOLACION ISP]
