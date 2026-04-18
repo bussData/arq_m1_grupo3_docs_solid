@@ -8,7 +8,7 @@
 
 ## Contexto
 
-Cuando un alumno culmina un semestre, el sistema realiza el calculo de las notas por cada curso. Actualmente esa lógica vive dentro de `NotaService` con una cadena de condicionales según el tipo de usuario:
+Cuando un alumno culmina un semestre, el sistema realiza el calculo de las notas por cada curso. Actualmente esa lógica vive dentro de `NotaService` con una cadena de condicionales según el tipo de evaluación:
 
 **Código actual (con el problema):**
 
@@ -41,7 +41,7 @@ public class NotaService {
 Cada vez que se añade un nuevo tipo de evaluacion (por ejemplo, `INVESTIGACION` o `SIMULACRO`), hay que **modificar** `NotaService`. Esto:
 - Rompe código que ya funciona.
 - Obliga a revisar y actualizar todas las pruebas existentes del método.
-- Mezcla la lógica de negocio de préstamos con las reglas de tarifas.
+- Mezcla la lógica de negocio de notas con las reglas de cálculo.
 
 ---
 
