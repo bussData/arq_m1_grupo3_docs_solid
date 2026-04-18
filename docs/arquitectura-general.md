@@ -13,7 +13,7 @@ El sistema se ha diseñado bajo un enfoque de **microservicios independientes**,
 ## Diagrama de Contexto
 
 ```
-Ver imagen "DiagramaContexto.png"
+![Diagrama de contexto](https://github.com/bussData/arq_m1_grupo3_docs_solid/blob/main/docs/DiagramaContexto.png)
 ```
 
 ---
